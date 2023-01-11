@@ -1,12 +1,7 @@
 package org.dromakin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CheckingAccount extends Account {
-
-    private static final Logger logger = LogManager.getLogger(CheckingAccount.class);
-
     protected int balance;
 
     public CheckingAccount(String name) {
@@ -18,10 +13,10 @@ public class CheckingAccount extends Account {
     public boolean transfer(Account account, int amount) {
         boolean result = false;
 
-        String msgErr = "Перевод денег с Расчетного аккаунта {} в аккаунт {} отклонен!";
+        String msgErr = "Перевод денег с Расчетного аккаунта %s в аккаунт %s отклонен!\n";
 
         if (amount > this.balance) {
-            logger.warn(msgErr, this.name, account.name);
+            System.out.printf(msgErr, this.name, account.name);
         } else {
 
             // 0. transaction open
@@ -34,9 +29,9 @@ public class CheckingAccount extends Account {
 
             // 3. check transaction
             if (!success) {
-                logger.warn(msgErr, this.name, account.name);
+                System.out.printf(msgErr, this.name, account.name);
             } else {
-                logger.info("Произведен перевод денег на сумму {} c Расчетного аккаунта {} на аккаунт {}", amount, this.name, account.name);
+                System.out.printf("Произведен перевод денег на сумму %s c Расчетного аккаунта %s на аккаунт %s\n", amount, this.name, account.name);
                 result = true;
             }
 
@@ -50,11 +45,11 @@ public class CheckingAccount extends Account {
         boolean result = false;
 
         if (amount <= 0) {
-            logger.warn("На Расчетный счет {} не возможно добавить {}", this.name, amount);
+            System.out.printf("На Расчетный счет %s не возможно добавить %s\n", this.name, amount);
         } else {
             this.balance += amount;
             result = true;
-            logger.info("На Расчетный аккаунт счета {} было добавлено {}", this.name, amount);
+            System.out.printf("На Расчетный аккаунт счета %s было добавлено %s\n", this.name, amount);
         }
 
         return result;
@@ -65,11 +60,11 @@ public class CheckingAccount extends Account {
         boolean result = false;
 
         if (amount > this.balance || amount <= 0) {
-            String errMsg = "Вы не можете оплатить с данного Расчетного счета, т.к. " + (amount <= 0 ? "amount <= 0!": "не хватает денег на счете!");
-            logger.warn(errMsg);
+            String errMsg = "Вы не можете оплатить с данного Расчетного счета, т.к. " + (amount <= 0 ? "amount <= 0!\n": "не хватает денег на счете!\n");
+            System.out.printf(errMsg);
         } else {
             this.balance -= amount;
-            logger.info("С Вашего Расчетного счета была снята сумма: {}", amount);
+            System.out.printf("С Вашего Расчетного счета была снята сумма: %s\n", amount);
             result = true;
         }
 
@@ -77,7 +72,7 @@ public class CheckingAccount extends Account {
     }
 
     public void getBalance() {
-        logger.info("Текущий баланс на Расчетном аккаунте {} : {}", this.name, this.balance);
+        System.out.printf("Текущий баланс на Расчетном аккаунте %s : %s\n", this.name, this.balance);
     }
 
 }

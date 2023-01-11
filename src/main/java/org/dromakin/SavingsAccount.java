@@ -1,12 +1,7 @@
 package org.dromakin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class SavingsAccount extends Account {
-
-    private static final Logger logger = LogManager.getLogger(SavingsAccount.class);
-
     protected int balance;
 
     public SavingsAccount(String name) {
@@ -16,7 +11,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public boolean pay(int amount) {
-        logger.warn("Оплачивать со Сберегательного счета {} нельзя!", this.name);
+        System.out.printf("Оплачивать со Сберегательного счета %s нельзя!", this.name);
         return false;
     }
 
@@ -24,10 +19,10 @@ public class SavingsAccount extends Account {
     public boolean transfer(Account account, int amount) {
         boolean result = false;
 
-        String msgErr = "Перевод денег из Сберегательного аккаунта {} в аккаунт {} отклонен!";
+        String msgErr = "Перевод денег из Сберегательного аккаунта %s в аккаунт %s отклонен!\n";
 
         if (amount > this.balance) {
-            logger.warn(msgErr, this.name, account.name);
+            System.out.printf(msgErr, this.name, account.name);
         } else {
 
             // 0. transaction open
@@ -40,9 +35,9 @@ public class SavingsAccount extends Account {
 
             // 3. check transaction
             if (!success) {
-                logger.warn(msgErr, this.name, account.name);
+                System.out.printf(msgErr, this.name, account.name);
             } else {
-                logger.info("Произведен перевод денег на сумму {} из Сберегательного аккаунта {} на аккаунт {}", amount, this.name, account.name);
+                System.out.printf("Произведен перевод денег на сумму %s из Сберегательного аккаунта %s на аккаунт %s\n", amount, this.name, account.name);
                 result = true;
             }
 
@@ -56,18 +51,18 @@ public class SavingsAccount extends Account {
         boolean result = false;
 
         if (amount <= 0) {
-            logger.warn("На Сберегательный счет {} не возможно добавить {}", this.name, amount);
+            System.out.printf("На Сберегательный счет %s не возможно добавить %s\n", this.name, amount);
         } else {
             this.balance += amount;
             result = true;
-            logger.info("На Сберегательный аккаунт счета {} было добавлено {}", this.name, amount);
+            System.out.printf("На Сберегательный аккаунт счета %s было добавлено %s\n", this.name, amount);
         }
 
         return result;
     }
 
     public void getBalance() {
-        logger.info("Текущий баланс на Сберегательном аккаунте {} : {}", this.name, this.balance);
+        System.out.printf("Текущий баланс на Сберегательном аккаунте %s : %s\n", this.name, this.balance);
     }
 
 }
