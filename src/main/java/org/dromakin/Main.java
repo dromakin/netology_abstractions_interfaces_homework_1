@@ -1,11 +1,7 @@
 package org.dromakin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Main {
-
-    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         Account checkingAccount = new CheckingAccount("my1");
@@ -17,7 +13,7 @@ public class Main {
         boolean cra = creditAccount.addMoney(1_000_000);
         boolean sa = savingsAccount.addMoney(5_000_000);
 
-        logger.info("result addMoney: checkingAccount {} | creditAccount {} | savingsAccount {}", cha, cra, sa);
+        System.out.printf("result addMoney: checkingAccount %s | creditAccount %s | savingsAccount %s\n", cha, cra, sa);
 
         ((CheckingAccount) checkingAccount).getBalance();
         ((CreditAccount) creditAccount).getBalance();
@@ -32,7 +28,7 @@ public class Main {
         cha = checkingAccount.pay(7_000_000);
         sa = savingsAccount.pay(7_000_000);
 
-        logger.info("result pay: checkingAccount {} | creditAccount {} | savingsAccount {}", cha, cra, sa);
+        System.out.printf("result pay: checkingAccount %s | creditAccount %s | savingsAccount %s\n", cha, cra, sa);
 
         ((CheckingAccount) checkingAccount).getBalance();
         ((CreditAccount) creditAccount).getBalance();
@@ -63,7 +59,7 @@ public class Main {
         // по ошибке указали перевод в 0 рублей
         cha = checkingAccount.transfer(creditAccount, 0);
 
-        logger.info("result transfer: checkingAccount {} | creditAccount {} | savingsAccount {}", cha, cra, sa);
+        System.out.printf("result transfer: checkingAccount %s | creditAccount %s | savingsAccount %s\n", cha, cra, sa);
 
         cha = checkingAccount.transfer(creditAccount, 2_000_000);
         cha = checkingAccount.transfer(savingsAccount, 1_000_000);

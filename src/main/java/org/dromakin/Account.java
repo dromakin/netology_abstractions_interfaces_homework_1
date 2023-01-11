@@ -1,11 +1,7 @@
 package org.dromakin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public abstract class Account {
-
-    private static final Logger logger = LogManager.getLogger(Account.class);
 
     protected String name;
 

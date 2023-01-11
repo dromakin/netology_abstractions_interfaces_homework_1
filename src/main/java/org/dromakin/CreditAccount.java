@@ -1,12 +1,7 @@
 package org.dromakin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CreditAccount extends Account {
-
-    private static final Logger logger = LogManager.getLogger(CreditAccount.class);
-
     protected int balance;
 
     public CreditAccount(String name) {
@@ -19,10 +14,10 @@ public class CreditAccount extends Account {
         boolean result = false;
 
         if (amount <= 0) {
-            logger.warn("Вы не можете оплатить с данного Кредитного счета, т.к. amount <= 0!");
+            System.out.printf("Вы не можете оплатить с данного Кредитного счета, т.к. amount <= 0!\n");
         } else {
             this.balance -= amount;
-            logger.info("С Вашего Кредитного счета была снята сумма: {}", amount);
+            System.out.printf("С Вашего Кредитного счета была снята сумма: %s\n", amount);
             result = true;
         }
 
@@ -45,9 +40,9 @@ public class CreditAccount extends Account {
 
         // 3. check transaction
         if (!success) {
-            logger.warn("Перевод денег с Кредитного аккаунта {} в аккаунт {} отклонен!", this.name, account.name);
+            System.out.printf("Перевод денег с Кредитного аккаунта %s в аккаунт %s отклонен!\n", this.name, account.name);
         } else {
-            logger.info("Произведен перевод денег на сумму {} c Кредитного аккаунта {} на аккаунт {}", amount, this.name, account.name);
+            System.out.printf("Произведен перевод денег на сумму %s c Кредитного аккаунта %s на аккаунт %s\n", amount, this.name, account.name);
             result = true;
         }
 
@@ -61,11 +56,11 @@ public class CreditAccount extends Account {
         boolean result = false;
 
         if (amount <= 0) {
-            logger.warn("На Кредитный счет {} не возможно добавить {}", this.name, amount);
+            System.out.printf("На Кредитный счет %s не возможно добавить %s\n", this.name, amount);
         } else {
             this.balance += amount;
             result = true;
-            logger.info("На аккаунт Кредитного счета {} было добавлено {}", this.name, amount);
+            System.out.printf("На аккаунт Кредитного счета %s было добавлено %s\n", this.name, amount);
         }
 
         printAttention();
@@ -75,12 +70,12 @@ public class CreditAccount extends Account {
 
     private void printAttention() {
         if (this.balance < 0) {
-            logger.warn("Ваш Кредитный счет в минусе! Не забудьте пополнить счет.");
+            System.out.printf("Ваш Кредитный счет в минусе! Не забудьте пополнить счет.\n");
         }
     }
 
     public void getBalance() {
-        logger.info("Текущий баланс на Кредитном аккаунте {} : {}", this.name, this.balance);
+        System.out.printf("Текущий баланс на Кредитном аккаунте %s : %s\n", this.name, this.balance);
     }
 
 }
